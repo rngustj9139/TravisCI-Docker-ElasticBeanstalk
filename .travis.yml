@@ -1,0 +1,18 @@
+# travisCI를 이용하기 위해서는 gitgub repo를 public으로 한뒤 travis-ci.com 사이트에서 깃허브 아이디로 로그인해야함, 이후 대쉬보드 확인
+sudo: required # 관리자 권한 획득
+
+language: generic # 프로그래밍 언어(플랫폼) 설정
+
+services:
+  - docker # 도커환경에서 travisCI 실행
+
+before_install: # 스크립트 실행(테스트 수행)전 동작
+  - echo "start creating an image with dockerfile"
+  - docker build -t mnb9139/part6travis -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true mnb9139/part6travis npm run test -- --coverage # -e CI=true는 travisCI측에서 지정한 디폴트 설정, -- --coverage는 테스트 수행결과를 더 자세히 보여줌 
+
+after_success:
+  - echo "Test success"
+
