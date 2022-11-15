@@ -1,4 +1,4 @@
-# travisCI를 이용하기 위해서는 gitgub repo를 public으로 한뒤 travis-ci.com 사이트에서 깃허브 아이디로 로그인해야함, 이후 대쉬보드 확인..
+# travisCI를 이용하기 위해서는 gitgub repo를 public으로 한뒤 travis-ci.com 사이트에서 깃허브 아이디로 로그인해야함, 이후 대쉬보드 확인...
 sudo: required # 관리자 권한 획득
 
 language: generic # 프로그래밍 언어(플랫폼) 설정
