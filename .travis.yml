@@ -24,7 +24,7 @@ after_success:
 # 배포시에는 Dockerfile.dev가 아닌 Dockerfile을 자동으로 빌드하고 컨테이너를 띄운다 하지만 우리는 ElasticBeanstalk의 브랜치 플랫폼을 linux2로 설정했기 때문에 docker-compose.yml이 자동으로 빌드되고 컨테이너화될 것이다.
 deploy:
   provider: elasticbeanstalk # aws elastic beanstalk는 내부에 여러개의 ec2 인스턴스를 가지고 있고 ec2인스턴스 안에는 도커 컨테이너가 있으며 도커 컨테이너 안에는 우리의 애플리케이션이 들어갈 것이다. 또 elasticbeanstalk 안에는 로드벨런서가 존재해 요청이 어떤 ec2 인스턴스로 갈것인지 조절도 가능하다.
-  region: "ap-northeast-1" # (서버컴이 존재하는 물리적 위치)aws elasticbenastalk 페이지에서 애플리케이션 이름이 표시된 부분 위에 존재(복붙하기)
+  region: "ap-northeast-1" # (서버컴이 존재하는 물리적 위치)aws elasticbenastalk 페이지에서 애플리케이션 이름이 표시된 부분 위에 존재(복붙하고 위치 정보만 추려내기)
   app: "part6-react-docker-travisci" # aws elasticbenastalk 페이지에 표시되는 애플리케이션 이름
   env: "Part6reactdockertravisci-env"
   bucket_name: "elasticbeanstalk-ap-northeast-1-317209937446" # (aws elasticbeanstalk내의 s3 버킷 이름 지정, aws 페이지에서 s3검색한 뒤 버킷이름 복붙하기) aws elasticbenastalk 환경 내에는 로드벨런서와 다수의 ec2 인스턴스만 존재하는 것이 아니라 s3도 존재한다. 우리는 travisCI를 통해 aws로 배포를 할때 데이터를 압축해서 elasticbenastalk 내의 s3로 전송할것이다. 
@@ -46,8 +46,8 @@ deploy:
 # 적어주면 된다.
 # name은 아무렇게 짓고 value로는 엑세스 키를 입력한 뒤 add 버튼을 누르면 된다.
 # 이후 또 name에 AWS_SECRET_ACCESS_KEY를 입력하고 value에 비밀 엑세스 키를 복붙한 뒤 또 add 버튼을 눌러야한다. 그럼 두개의 환경변수 생성이 완료된다.
-  access_key_id: $AWS_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기
-  secret_access_key: $AWS_SECRET_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기.
+access_key_id: $AWS_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기
+secret_access_key: $AWS_SECRET_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기.
 #### travisCI와 aws를 연동하기 끝 ####
 
 # AWS ElasticBeanstalk 페이지에서 애플리케이션 이름이 표시된 부분의 바로 위에있는 링크를 클릭하면 리엑트 페이지가 잘 뜬다.
