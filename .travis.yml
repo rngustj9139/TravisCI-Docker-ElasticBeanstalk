@@ -1,4 +1,5 @@
 # travisCI를 이용하기 위해서는 gitgub repo를 public으로 한뒤 travis-ci.com 사이트에서 깃허브 아이디로 로그인해야함, 이후 대쉬보드 확인...
+#### 배포전 테스트 수행 시작 ####
 sudo: required # 관리자 권한 획득
 
 language: generic # 프로그래밍 언어(플랫폼) 설정
@@ -15,4 +16,33 @@ script:
 
 after_success:
   - echo "Test success"
+#### 배포전 테스트 수행 끝 ####
 
+#### 테스트 완료 후 배포 수행 시작 ####
+deploy:
+  provider: elasticbeanstalk # aws elastic beanstalk는 내부에 여러개의 ec2 인스턴스를 가지고 있고 ec2인스턴스 안에는 도커 컨테이너가 있으며 도커 컨테이너 안에는 우리의 애플리케이션이 들어갈 것이다. 또 elasticbeanstalk 안에는 로드벨런서가 존재해 요청이 어떤 ec2 인스턴스로 갈것인지 조절도 가능하다.
+  region: "Part6reactdockertravisci-env.eba-qcty35ge.ap-northeast-1.elasticbeanstalk.com" # (서버컴이 존재하는 물리적 위치)aws elasticbenastalk 페이지에서 애플리케이션 이름이 표시된 부분 위에 존재(복붙하기)
+  app: "part6-react-docker-travisci" # aws elasticbenastalk 페이지에 표시되는 애플리케이션 이름
+  env: "Part6reactdockertravisci-env"
+  bucket_name: "elasticbeanstalk-ap-northeast-1-317209937446" # (aws elasticbeanstalk내의 s3 버킷 이름 지정, aws 페이지에서 s3검색한 뒤 버킷이름 복붙하기) aws elasticbenastalk 환경 내에는 로드벨런서와 다수의 ec2 인스턴스만 존재하는 것이 아니라 s3도 존재한다. 우리는 travisCI를 통해 aws로 배포를 할때 데이터를 압축해서 elasticbenastalk 내의 s3로 전송할것이다. 
+  bucket_path: "part6-react-docker-travisci" # app에서 작성한 이름과 똑같이 적기 
+  on:
+    branch: master # master 브랜치에 push가 될때만 aws에 배포를 한다.
+#### 테스트 완료 후 배포 수행 끝 ####
+
+# 깃허브 아이디로 travisCI에 로그인했기 때문에 깃허브와 travisCI가 연동이 되었음 (repo에 push를 할 경우 소스를 travisCI가 가져갈 수 있게됨)
+# 그렇다면 travisCI가 어떻게 aws에 배포를 할 수 있을까(어떻게 연동을 할까?) 
+# => aws페이지에서 IAM(root 사용자가 부여한 권한만을 갖는 유저) 를 검색한다음에 사용자 추가를 누르고 엑세스 키 생성 칸을 체크한뒤 
+#    다음버튼 누르기, 이후 기존 정책 직접 연결을 누른뒤 AdministratorAccess-AWSElasticBeanstalk 를 체크한 뒤(full 권한부여) 다음버튼 누르기
+#    태그 추가 부분은 옵션이다.
+#    이후 access key id와 secret access key를 확인할 수 있다. 
+
+#### travisCI와 aws를 연동하기 시작 ####
+# 연동을 위해 직접 access key를 이곳에 적으면 노출이 되기 때문에 다른곳에 적고 그것을 가져와야한다.
+# travisCI 웹페이지로 이동 후 대쉬보드에서 사용중인 repo에 들어간 뒤 more options 클릭, 이후 setting을 클릭하면 아래에 Environment Variable칸에
+# 적어주면 된다.
+# name은 아무렇게 짓고 value로는 비밀 엑세스 키를 입력한 뒤 add 버튼을 누르면 된다.
+# 이후 또 name에 AWS_SECRET_ACCESS_KEY를 입력하고 value에 비밀 엑세스 키를 복붙한 뒤 또 add 버튼을 눌러야한다. 그럼 두개의 환경변수 생성이 완료된다.
+  access_key_id: $AWS_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기
+  secret_access_key: $AWS_SECRET_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기
+#### travisCI와 aws를 연동하기 끝 ####
