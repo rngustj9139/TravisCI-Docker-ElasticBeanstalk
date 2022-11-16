@@ -9,8 +9,8 @@ services:
 
 before_install: # 스크립트 실행(테스트 수행)전 동작
   - echo "start creating an image with dockerfile"
-  - docker build -t mnb9139/part6travis .
-# - docker build -t mnb9139/part6travis -f Dockerfile.dev .
+  # - docker build -t mnb9139/part6travis .
+  - docker build -t mnb9139/part6travis -f Dockerfile.dev .
 
 script:
   - docker run -e CI=true mnb9139/part6travis npm run test -- --coverage # -e CI=true는 travisCI측에서 지정한 디폴트 설정, -- --coverage는 테스트 수행결과를 더 자세히 보여줌 
@@ -47,3 +47,6 @@ deploy:
   access_key_id: $AWS_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기
   secret_access_key: $AWS_SECRET_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기.
 #### travisCI와 aws를 연동하기 끝 ####
+
+# AWS ElasticBeanstalk 페이지에서 애플리케이션 이름이 표시된 부분의 바로 위에있는 링크를 클릭하면 리엑트 페이지가 잘 뜬다.
+# 이후 AWS ElasticBeanstalk를 계속 실행해두면 과금이 발생하기 때문에 AWS ElasticBeanstalk 페이지에서 작업을 클릭한 뒤 환경 종료를 클릭해야한다.
