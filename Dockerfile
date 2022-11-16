@@ -12,6 +12,8 @@ COPY ./ ./
 # start가 아닌 build이다.
 RUN npm run build
 
+CMD ["npm", "run", "start"]
+
 FROM nginx
 
 EXPOSE 80
