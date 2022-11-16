@@ -10,7 +10,7 @@ RUN npm install
 COPY ./ ./
 
 # start가 아닌 build이다.
-RUN npm run build
+CMD ["npm", "run", "build"]
 
 # CMD ["npm", "run", "start"]
 
