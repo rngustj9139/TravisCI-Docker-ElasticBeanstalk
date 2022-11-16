@@ -23,6 +23,7 @@ after_success:
 # 테스트 시에는 Dockerfile.dev를 빌드해서 이미지로 만든뒤 컨테이너화해서 테스트를 수행하고
 # 배포시에는 Dockerfile.dev가 아닌 Dockerfile을 자동으로 빌드하고 컨테이너를 띄운다 하지만 우리는 ElasticBeanstalk의 브랜치 플랫폼을 linux2로 설정했기 때문에 docker-compose.yml이 자동으로 빌드되고 컨테이너화될 것이다.
 deploy:
+  edge: true
   provider: elasticbeanstalk # aws elastic beanstalk는 내부에 여러개의 ec2 인스턴스를 가지고 있고 ec2인스턴스 안에는 도커 컨테이너가 있으며 도커 컨테이너 안에는 우리의 애플리케이션이 들어갈 것이다. 또 elasticbeanstalk 안에는 로드벨런서가 존재해 요청이 어떤 ec2 인스턴스로 갈것인지 조절도 가능하다.
   region: "Part6reactdockertravisci-env.eba-qcty35ge.ap-northeast-1.elasticbeanstalk.com" # (서버컴이 존재하는 물리적 위치)aws elasticbenastalk 페이지에서 애플리케이션 이름이 표시된 부분 위에 존재(복붙하기)
   app: "part6-react-docker-travisci" # aws elasticbenastalk 페이지에 표시되는 애플리케이션 이름
