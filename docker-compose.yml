@@ -1,25 +1,25 @@
-version: "3"
-services:
-  react: # 컨테이너 이름
-    build: # 현 디렉토리에 있는 Dockerfile 사용
-      context: . # 도커 이미지를 구성하기 위한 파일과 폴더들이 있는 위치
-      dockerfile: Dockerfile.dev # docker run -f Dockerfile.dev를 의미한다.
-    ports:
-      - "3000:3000"
-    volumes:
-      - /usr/src/app/node_modules # 이건 무시
-      - ./:/usr/src/app # . 현재 디렉터리를 컨테이너 내 워크 디렉터리로 매핑함
-    environment:
-      - CHOKIDAR_USEPOLLING=true # volumes가 적용 안될때 환경변수를 적용해야함
-    stdin_open: true # 리엑트 앱을 끌 때 필요(버그 수정)
-  tests: # 테스트 소스도 변경시 바로 반영되게한다.(App.test.js) docker-compose up시 자동으로 테스트도 수행된다.
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /usr/src/app/node_modules 
-      - ./:/usr/src/app 
-    command: ["npm", "run", "test"]
+# version: "3"
+# services:
+#   react: # 컨테이너 이름
+#     build: # 현 디렉토리에 있는 Dockerfile 사용
+#       context: . # 도커 이미지를 구성하기 위한 파일과 폴더들이 있는 위치
+#       dockerfile: Dockerfile.dev # docker run -f Dockerfile.dev를 의미한다.
+#     ports:
+#       - "3000:3000"
+#     volumes:
+#       - /usr/src/app/node_modules # 이건 무시
+#       - ./:/usr/src/app # . 현재 디렉터리를 컨테이너 내 워크 디렉터리로 매핑함
+#     environment:
+#       - CHOKIDAR_USEPOLLING=true # volumes가 적용 안될때 환경변수를 적용해야함
+#     stdin_open: true # 리엑트 앱을 끌 때 필요(버그 수정)
+#   tests: # 테스트 소스도 변경시 바로 반영되게한다.(App.test.js) docker-compose up시 자동으로 테스트도 수행된다.
+#     build:
+#       context: .
+#       dockerfile: Dockerfile.dev
+#     volumes:
+#       - /usr/src/app/node_modules 
+#       - ./:/usr/src/app 
+#     command: ["npm", "run", "test"]
 
 
 # 이젠 docker-compose up을 통해 실행하면 된다.
@@ -27,3 +27,18 @@ services:
 # npm run test를 수행하면 node_modules가 없기 때문에 에러가 발생할 것임 따라서 컨테이너 상에서 테스트를 수행해야하는데 이를 위해서는 다음과 같이 명령어를 입력해야한다.
 # => docker run -it mnb9139/part6:latest npm run test (에러발생, 에러 해결 못함)
 # app.test.js를 변경(테스트를 여러개 추가)해도 위 명령어를 실행하면 하나의 테스트만 수행된다. 하지만 테스트 소스를 변경해도 컨테이터에서 이를 인지하기 위해 command: ["npm", "run", "test"]를 추가해주면 된다.
+
+
+# 위 소스는 개발환경에서만 사용하고 배포할 경우 아래를 사용한다.
+version: "3"
+services:
+  react:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - '80:80' # nginx는 80번 포트를 이용한다.
+    volumes:
+    - /usr/src/app/node_modules
+    - ./:/usr/src/app
+    stdin_open: true
