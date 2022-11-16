@@ -13,6 +13,7 @@ COPY ./ ./
 RUN npm run build
 
 FROM nginx
+EXPOSE 80
 # 빌드된 파일들을 nginx가 접근할수 있는 디렉터리로 매핑을 해준다.
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 
