@@ -21,7 +21,7 @@ after_success:
 
 #### 테스트 완료 후 배포 수행 시작 ####
 # 테스트 시에는 Dockerfile.dev를 빌드해서 이미지로 만든뒤 컨테이너화해서 테스트를 수행하고
-# 배포시에는 Dockerfile.dev가 아닌 Dockerfile을 자동으로 빌드하고 컨테이너를 띄운다 하지만 우리는 ElasticBeanstalk의 브랜치 플랫폼을 linux2로 설정했기 때문에 docker-compose.yml이 자동으로 빌드되고 컨테이너화될 것이다.
+# 배포시에는 Dockerfile.dev가 아닌 Dockerfile을 자동으로 빌드하고 컨테이너를 띄운다 
 deploy:
   provider: elasticbeanstalk # aws elastic beanstalk는 내부에 여러개의 ec2 인스턴스를 가지고 있고 ec2인스턴스 안에는 도커 컨테이너가 있으며 도커 컨테이너 안에는 우리의 애플리케이션이 들어갈 것이다. 또 elasticbeanstalk 안에는 로드벨런서가 존재해 요청이 어떤 ec2 인스턴스로 갈것인지 조절도 가능하다.
   edge: true

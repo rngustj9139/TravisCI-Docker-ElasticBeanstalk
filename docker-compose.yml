@@ -28,17 +28,3 @@ services:
 # => docker run -it mnb9139/part6:latest npm run test (에러발생, 에러 해결 못함)
 # app.test.js를 변경(테스트를 여러개 추가)해도 위 명령어를 실행하면 하나의 테스트만 수행된다. 하지만 테스트 소스를 변경해도 컨테이터에서 이를 인지하기 위해 command: ["npm", "run", "test"]를 추가해주면 된다.
 
-
-# 위 소스는 개발환경에서만 사용하고 배포할 경우 아래를 사용한다.
-# version: "3"
-# services:
-#   react:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile
-#     ports:
-#     - '80:80' # nginx는 80번 포트를 이용한다.
-#     volumes:
-#     - /usr/src/app/node_modules
-#     - ./:/usr/src/app
-#     stdin_open: true
