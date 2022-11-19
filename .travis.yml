@@ -42,13 +42,13 @@ deploy:
 #    이후 access key id와 secret access key를 확인할 수 있다. 
 
 #### travisCI와 aws를 연동하기 시작 ####
-# 연동을 위해 직접 access key를 이곳에 적으면 노출이 되기 때문에 다른곳에 적고 그것을 가져와야한다.
+# 연동을 위해 직접 access key를 이곳에 적으면 노출이 되기 때문에 다른곳에 적고 그것을 가져와야한다..
 # travisCI 웹페이지로 이동 후 대쉬보드에서 사용중인 repo에 들어간 뒤 more options 클릭, 이후 setting을 클릭하면 아래에 Environment Variable칸에
 # 적어주면 된다.
 # name은 아무렇게 짓고 value로는 엑세스 키를 입력한 뒤 add 버튼을 누르면 된다.
 # 이후 또 name에 AWS_SECRET_ACCESS_KEY를 입력하고 value에 비밀 엑세스 키를 복붙한 뒤 또 add 버튼을 눌러야한다. 그럼 두개의 환경변수 생성이 완료된다.
-access_key_id: $AWS_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기
-secret_access_key: $AWS_SECRET_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기.
+  access_key_id: $AWS_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기
+  secret_access_key: $AWS_SECRET_ACCESS_KEY # TravisCI에 지정한 access key 환경변수 가져오기.....
 #### travisCI와 aws를 연동하기 끝 ####
 
 # AWS ElasticBeanstalk 페이지에서 애플리케이션 이름이 표시된 부분의 바로 위에있는 링크를 클릭하면 리엑트 페이지가 잘 뜬다.
