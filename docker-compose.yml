@@ -24,7 +24,7 @@ services:
 
 # 이젠 docker-compose up을 통해 실행하면 된다.
 # docker volumes 작동 x (해결 못함)
-# npm run test를 수행하면 node_modules가 없기 때문에 에러가 발생할 것임 따라서 컨테이너 상에서 테스트를 수행해야하는데 이를 위해서는 다음과 같이 명령어를 입력해야한다.
+# npm run test를 수행하면 로컬에서는 node_modules가 없기 때문에 에러가 발생할 것임 따라서 컨테이너 상에서 테스트를 수행해야하는데 이를 위해서는 다음과 같이 명령어를 입력해야한다.
 # => docker run -it mnb9139/part6:latest npm run test (에러발생, 에러 해결 못함)
-# app.test.js를 변경(테스트를 여러개 추가)해도 위 명령어를 실행하면 하나의 테스트만 수행된다. 하지만 테스트 소스를 변경해도 컨테이터에서 이를 인지하기 위해 command: ["npm", "run", "test"]를 추가해주면 된다.
+# app.test.js를 변경(테스트를 여러개 추가)해도 위 docker-compose up을 실행하면 하나의 테스트만 수행된다. 하지만 테스트 소스를 변경해도 컨테이터에서 이를 인지하기 위해 볼륨을 추가하고 또 command: ["npm", "run", "test"]를 추가해주면 된다.
 
